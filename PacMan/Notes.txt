@@ -1,0 +1,80 @@
+What are the requirements?
+- game score and life counter on screen
+- four states of the game: Normal, Immune, Power, Finished
+- have a window with pacman, ghosts, walls, pellets
+- pacman moves constantly following arrows on keyboard, it stops at a wall until movement direction changes
+- ghosts move constantly, not crossing walls, not teleporting
+- in Normal state, ghosts move towards pacman, in Power state, they move away from pacman
+- pacman colides with small pellet -> pellet dissapears and adds points
+- pacman colides with power pellet -> pellet dissapears, adds points, and changes game state to Power for time T, before returning to state Normal
+- state Power should be visibe by turning ghosts grey
+- pacman colides with ghost in Normal state -> life counter -1, if 0 state Finished, else state Immune for time T before turning to state Normal
+- pacman colides with ghost in Power state -> ghosts dissapears and adds points
+- pacman colides with ghost in Immune state -> nothing happens
+- score can be increased by coliding with small pellet, coliding with Power pellet, coliding with ghosts in Power state
+- in state Finished, display score, option restart (start a new game with 0 score)
+------------------------------------------------------------------------------------------------------------------------------------------------------
+What could be the classes?
+- pacman (could combine with ghost into a common class -> character)
+- ghost
+- wall
+- small pellet (could combine with power pellet -> pellet)
+- power pellet (or even with a wall -> non-movables)
+- state
+------------------------------------------------------------------------------------------------------------------------------------------------------
+What is the job of each class?
+- pacman class takes care of movement (L,F,U,D) and checks for collisions with ghosts/walls/pellets
+- ghosts class simulates movement (L,F,U,D) and enables colour change to grey
+- wall class creates a maze of walls
+- small pellet class puts small pellets everywhere, where there is no wall, pacman, ghost, or big pallet at game start
+- power pellet class puts a few power pellets in the maze
+- state class constantly checks for the state of the game and changes it accordingly
+------------------------------------------------------------------------------------------------------------------------------------------------------
+How should the classes relate to each other (inheritance)?
+- pacman isA character
+- ghosts isA character
+- small pellet isA pellet/non-movable
+- power pellet isA pellet/non-movable
+- wall isA non-movable
+- state is a state only
+
+- pacman hasA orientation, state
+- ghosts hasA orientatiton, state
+- small pellet hasA coordinate
+- power pellet hasA coordinate
+- wall hasA coordinate
+- state hasA lives, score, state
+------------------------------------------------------------------------------------------------------------------------------------------------------
+How should the workflow look like?
+1. create a window
+2. create a maze
+3. put pellets into place
+4. put pacman and ghosts into place
+5. create logic behind movement and collisions for pacman
+6. simulate movement for ghosts
+7. create logic behind adding points and loosing lives
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Brainstorm:
+
+- pacman and ghosts could be in a same class Character
+- walls and pellets should probably stay separate as they don't share any behaviour (or maybe together in Tile??)
+- collision could be managed by state/game instead of pacaman/character individually
+- have a Tile class to store what is at each tile in the 2D matrix (probably hardcode maze)
+
+
+
+Game — the main game loop, holds everything
+Tile — represents one cell in the grid, knows if it's a wall/pellet
+Character — parent class for moving entities
+Pacman extends Character
+Ghost extends Character
+GameState — enum or class tracking Normal/Immune/Power/Finished
+
+- Game — game loop, holds grid, pacman, ghosts, state, score, lives
+- Tile — isWall, hasPellet, isPowerPellet
+- Character — position (x,y), orientation, move()
+- Pacman extends Character — getNextDirection() from keyboard
+- Ghost extends Character — getNextDirection() from AI
+- GameState — enum with Normal, Immune, Power, Finished

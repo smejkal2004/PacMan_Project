@@ -40,10 +40,10 @@ public class Maze {
 
     // constructor - converts layout into Tile[][] grid
     public Maze() {
-    // 1. first initialize the grid
+    // initialises the grid
     grid = new Tile[31][28];
     
-    // 2. then loop through layout and fill it
+    // loops through layout and fills it
     for (int row = 0; row < layout.length; row++) {
         String[] tokens = layout[row].split(" ");
         for (int col = 0; col < tokens.length; col++) {

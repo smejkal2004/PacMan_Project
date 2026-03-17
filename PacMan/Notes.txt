@@ -91,3 +91,15 @@ View:
 
 Controller:
 - GameController — runs game loop, handles keyboard, calls model + view
+
+let's recap on what i have so far...i have a MVC structured folder with maze, tile,
+gameview and main java files...maze file (in model) is storing the layout of the maze
+in terms of 1s, 0s and several different symbols for ghosts, pellets and pacman,
+it also stores the maze() method which is responsible for setting different tile types
+for each tile, lastly it stores the getter method for a tile...tile file (also in model)
+is storing the different types of tiles in an enum form, has a getter for a tiletype
+and a method eat() which switches any tile to an empty one...gameview file (in view)
+is responsible for showing/initialising the maze it checks for tiletypes
+set by the tile file and colours the walls blue and everything else black..
+the main file is responsible for opening/rendering the window via javafx and stores
+the main() method (kinda right for now)

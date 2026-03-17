@@ -78,3 +78,16 @@ GameState — enum or class tracking Normal/Immune/Power/Finished
 - Pacman extends Character — getNextDirection() from keyboard
 - Ghost extends Character — getNextDirection() from AI
 - GameState — enum with Normal, Immune, Power, Finished
+
+- We learned about MVC and State design patterns, I think it's a good idea to include those
+
+Model:
+- Maze, Tile
+- Character, PacMan, Ghost
+- GameState (interface + concrete states)
+
+View:
+- GameView — draws everything based on the model
+
+Controller:
+- GameController — runs game loop, handles keyboard, calls model + view

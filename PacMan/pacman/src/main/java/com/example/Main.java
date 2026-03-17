@@ -1,5 +1,8 @@
 package com.example;
 
+import com.example.model.Maze;
+import com.example.model.Tile;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;

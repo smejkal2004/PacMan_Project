@@ -10,7 +10,7 @@ public class PowerState implements GameState {
     
     @Override
     public void handleGhostCollision(){
-        // need a method that removes a ghost
+        // need a method that removes a ghost (placeholder)
         game.setScore(game.getScore() + 50);
     }
 

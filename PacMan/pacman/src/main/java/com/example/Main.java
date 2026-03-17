@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.model.Maze;
+import com.example.model.Game;
 import com.example.view.GameView;
 
 import javafx.application.Application;
@@ -11,8 +11,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-    Maze maze = new Maze();
-    GameView view = new GameView(maze);
+    Game game = new Game();
+    GameView view = new GameView(game);
     Scene scene = new Scene(view.render(), 560, 620);
     
     stage.setTitle("Pac-Man (so far)");

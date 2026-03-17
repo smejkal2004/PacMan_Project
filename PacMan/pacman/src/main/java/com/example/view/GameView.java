@@ -1,6 +1,6 @@
 package com.example.view;
 
-import com.example.model.Maze;
+import com.example.model.Game;
 import com.example.model.Tile;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -8,10 +8,10 @@ import javafx.scene.shape.Rectangle;
 
 public class GameView {
 
-    private Maze maze;
+    private Game game;
 
-    public GameView(Maze maze) {
-        this.maze = maze;
+    public GameView(Game game) {
+        this.game = game;
     }
 
     public Pane render() {
@@ -19,7 +19,7 @@ public class GameView {
 
         for (int row = 0; row < 31; row++) {
             for (int col = 0; col < 28; col++) {
-                Tile tile = maze.getTile(row, col);
+                Tile tile = game.getMaze().getTile(row, col);
                 Color color;
                 if (tile.getTileType() == Tile.TileType.WALL) {
                     color = Color.BLUE;

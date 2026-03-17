@@ -1,4 +1,13 @@
 /Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/Main.java
+/Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/model/Character.java
+/Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/model/FinishedState.java
+/Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/model/Game.java
+/Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/model/GameState.java
+/Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/model/Ghost.java
+/Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/model/ImmuneState.java
 /Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/model/Maze.java
+/Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/model/NormalState.java
+/Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/model/Pacman.java
+/Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/model/PowerState.java
 /Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/model/Tile.java
 /Users/smejky20/Downloads/2. Semester/DM575 - Objektorienteret Programmering/PacMan Project/PacMan/pacman/src/main/java/com/example/view/GameView.java

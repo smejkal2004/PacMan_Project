@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage stage) {
     Game game = new Game();
     GameView view = new GameView(game);
-    Scene scene = new Scene(view.render(), 560, 620);
+    Scene scene = new Scene(view.render(), 560, 660); // changed 620 to 660 for lives and score display
     
     stage.setTitle("Pac-Man (so far)");
     stage.setScene(scene);
@@ -28,4 +28,3 @@ public class Main extends Application {
 // mvn javafx:run
 
 
-//test

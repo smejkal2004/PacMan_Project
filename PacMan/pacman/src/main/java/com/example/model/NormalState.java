@@ -7,7 +7,7 @@ public class NormalState implements GameState {
     public NormalState(Game game){
         this.game = game;
     }
-
+    
     @Override
     public void handleGhostCollision(){
         game.setLives(game.getLives() - 1);

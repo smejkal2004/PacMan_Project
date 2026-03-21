@@ -10,7 +10,6 @@ import javafx.scene.text.Font;
 import javafx.scene.shape.Circle;
 
 
-
 public class GameView {
 
     private Game game;
@@ -59,6 +58,15 @@ public class GameView {
 
         root.getChildren().addAll(scoreText, livesText);
         
+        // Render Pacman
+        Circle pacmanView = new Circle(
+            game.getPacman().getX() * 20 + 10, 
+            game.getPacman().getY() * 20 + topOffset + 10,
+            8 
+        );
+        pacmanView.setFill(Color.YELLOW);
+        root.getChildren().add(pacmanView);
+
         return root;
     }
 }

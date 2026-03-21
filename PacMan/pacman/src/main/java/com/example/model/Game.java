@@ -58,4 +58,38 @@ public class Game {
         return this.ghosts;
     }
 
+    // Pacman movement orientation = Where he is going
+    public boolean canMove(Character character, Character.Orientation orientation) {
+    int newX = character.getX();
+    int newY = character.getY();
+
+        if (orientation == Character.Orientation.UP) {
+        newY -= 1;
+        } else if (orientation == Character.Orientation.DOWN) {
+        newY += 1;
+        } else if (orientation == Character.Orientation.LEFT) {
+        newX -= 1;
+        } else if (orientation == Character.Orientation.RIGHT) {
+        newX += 1;
+        }
+
+    // Check bounds
+        if (newY < 0 || newY >= 31 || newX < 0 || newX >= 28) {
+        return false;
+        }
+
+    // Check for wall
+        return maze.getTile(newY, newX).getTileType() != Tile.TileType.WALL;
+
+}
+    // Pacman movement requested = Where the player makes him go
+    public void movePacman() {
+        Character.Orientation requested = pacman.getNextOrientation();
+        if (canMove(pacman, requested)) {
+            pacman.setOrientation(requested);
+        }
+        if (canMove(pacman, pacman.getOrientation())) {
+            pacman.move();
+        }
+    }
 }

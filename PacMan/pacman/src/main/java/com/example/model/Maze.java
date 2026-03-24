@@ -13,16 +13,16 @@ public class Maze {
     "1 s s s s s s s s s s s s s s s s s s s s s s s s s s 1",
     "1 s 1 1 1 1 s 1 1 s 1 1 1 1 1 1 1 1 s 1 1 s 1 1 1 1 s 1",
     "1 s 1 1 1 1 s 1 1 s 1 1 1 1 1 1 1 1 s 1 1 s 1 1 1 1 s 1",
-    "1 s s s s s s 1 1 s s s s 1 1 s s s s 1 1 s s s s s s 1",
-    "1 1 1 1 1 1 s 1 1 1 1 1 0 1 1 0 1 1 1 1 1 s 1 1 1 1 1 1",
-    "1 1 1 1 1 1 s 1 1 1 1 1 0 1 1 0 1 1 1 1 1 s 1 1 1 1 1 1",
-    "1 1 1 1 1 1 s 1 1 0 0 0 0 0 0 0 0 0 0 1 1 s 1 1 1 1 1 1",
-    "1 1 1 1 1 1 s 1 1 0 1 1 1 Gr Gp 1 1 1 0 1 1 s 1 1 1 1 1 1",
-    "0 0 0 0 0 0 s 0 0 0 1 Gb Gy 0 0 Gy 1 0 0 0 0 s 0 0 0 0 0 0",
-    "1 1 1 1 1 1 s 1 1 0 1 1 1 1 1 1 1 1 0 1 1 s 1 1 1 1 1 1",
-    "1 1 1 1 1 1 s 1 1 0 0 0 0 0 0 0 0 0 0 1 1 s 1 1 1 1 1 1",
-    "1 1 1 1 1 1 s 1 1 0 1 1 1 1 1 1 1 1 0 1 1 s 1 1 1 1 1 1",
-    "1 1 1 1 1 1 s 1 1 0 1 1 1 1 1 1 1 1 0 1 1 s 1 1 1 1 1 1",
+    "1 s s s s s s 1 1 s s s s s s s s s s 1 1 s s s s s s 1",
+    "1 1 1 1 1 1 s 1 1 1 s 1 1 1 1 1 1 s 1 1 1 s 1 1 1 1 1 1",
+    "1 1 1 1 1 1 s 1 1 1 s 1 1 1 1 1 1 s 1 1 1 s 1 1 1 1 1 1",
+    "1 1 s s s s s 1 1 1 s 1 1 1 1 1 1 s 1 1 1 s s s s s 1 1",
+    "1 1 s 1 1 1 s 1 1 1 s 1 1 Gr Gp 1 1 s 1 1 1 s 1 1 1 s 1 1",
+    "1 b s 1 1 1 s 1 1 1 s 1 1 Gb Gy 1 1 s 1 1 1 s 1 1 1 s b 1",
+    "1 1 s 1 1 1 s s s s s s s s s s s s s s s s 1 1 1 s 1 1",
+    "1 1 s s s s s 1 1 1 s 1 1 1 1 1 1 s 1 1 1 s s s s s 1 1",
+    "1 1 1 1 1 1 s 1 1 1 s 1 1 1 1 1 1 s 1 1 1 s 1 1 1 1 1 1",
+    "1 1 1 1 1 1 s 1 1 1 s 1 1 1 1 1 1 s 1 1 1 s 1 1 1 1 1 1",
     "1 s s s s s s s s s s s s 1 1 s s s s s s s s s s s s 1",
     "1 s 1 1 1 1 s 1 1 1 1 1 s 1 1 s 1 1 1 1 1 s 1 1 1 1 s 1",
     "1 s 1 1 1 1 s 1 1 1 1 1 s 1 1 s 1 1 1 1 1 s 1 1 1 1 s 1",
@@ -33,10 +33,10 @@ public class Maze {
     "1 s 1 1 1 1 1 1 1 1 1 1 s 1 1 s 1 1 1 1 1 1 1 1 1 1 s 1",
     "1 s 1 1 1 1 1 1 1 1 1 1 s 1 1 s 1 1 1 1 1 1 1 1 1 1 s 1",
     "1 s s s s s s s s s s s s s s s s s s s s s s s s s s 1",
-    "1 s 1 1 1 1 s 1 1 1 1 1 1 1 1 1 1 1 1 s 1 1 1 1 1 1 s 1",
-    "1 s s s s s s s s s s s s 1 1 s s s s s s s s s s s s 1",
+    "1 s 1 1 1 1 1 s 1 1 1 1 1 1 1 1 1 1 1 1 s 1 1 1 1 1 s 1",
+    "1 s s s s s s s s s s s s s s s s s s s s s s s s s s 1",
     "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
-    };
+};
 
     // constructor - converts layout into Tile[][] grid
     public Maze() {

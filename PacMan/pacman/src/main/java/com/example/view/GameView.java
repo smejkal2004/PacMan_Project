@@ -28,6 +28,12 @@ public class GameView {
             for (int col = 0; col < 28; col++) {
                 Tile tile = game.getMaze().getTile(row, col);
                 Color color;
+
+                if (tile == null) {
+                    System.out.println("NULL tile at row=" + row + " col=" + col);
+                    continue; // method to debug maze.java (can be deleted once maze design fully finished)
+                }
+
                 if (tile.getTileType() == Tile.TileType.WALL) {
                     color = Color.BLUE;
                 } else {

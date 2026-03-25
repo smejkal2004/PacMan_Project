@@ -1,0 +1,42 @@
+package com.example.controller;
+
+import com.example.model.Game;
+import com.example.model.Character;
+import com.example.view.GameView;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.Scene;
+import javafx.util.Duration;
+
+public class GameController {
+
+    private Game game;
+    private GameView view;
+    private Scene scene;
+
+    public GameController(Game game, GameView view, Scene scene) {
+        this.game = game;
+        this.view = view;
+        this.scene = scene;
+    }
+
+    public void start() {
+        scene.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case UP -> game.getPacman().setNextOrientation(Character.Orientation.UP);
+                case DOWN -> game.getPacman().setNextOrientation(Character.Orientation.DOWN);
+                case LEFT -> game.getPacman().setNextOrientation(Character.Orientation.LEFT);
+                case RIGHT -> game.getPacman().setNextOrientation(Character.Orientation.RIGHT);
+                default -> {}
+            }
+        });
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), e -> {
+            game.movePacman();
+            scene.setRoot(view.render());
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+}

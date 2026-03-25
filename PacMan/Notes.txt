@@ -103,3 +103,14 @@ is responsible for showing/initialising the maze it checks for tiletypes
 set by the tile file and colours the walls blue and everything else black..
 the main file is responsible for opening/rendering the window via javafx and stores
 the main() method (kinda right for now)
+------------------------------------------------------------------------------------------------------------------------------------------------------
+What should/could be done next? (as per 25th of March)
+- redesign top stripe of window with lives and points
+- make points functional aka build logic behind colisions with pellets
+- render ghosts (movement can be done at the very last (prob need to know more about AI))
+- show the direction pacman is moving (pacman needs mouth can be done also at the very end)
+- might be nice to display the state that the game is in? maybe in top right of the strip with score and lives? (might be somewhat original and also works as a bug finder)
+- as per project requirements, we need to add a README file (can be done at the end)
+- make an UML diagram, will help for oral defense, and need it for report
++ if you're reading this, I added the report template from the professor in overleaf already
++ feel free to add anything, this is very much just a brainstorm (it's also 11:30 my brain is not working properly :)

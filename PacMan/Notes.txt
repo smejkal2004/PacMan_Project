@@ -114,3 +114,7 @@ What should/could be done next? (as per 25th of March)
 - make an UML diagram, will help for oral defense, and need it for report
 + if you're reading this, I added the report template from the professor in overleaf already
 + feel free to add anything, this is very much just a brainstorm (it's also 11:30 my brain is not working properly :)
+
+New things: (3.4.26)
+- collision with pellets removes the pellet and adds points (2 for SMALL, 20 for POWER), change of gameState not done
+- ghosts are rendered, not moving tho

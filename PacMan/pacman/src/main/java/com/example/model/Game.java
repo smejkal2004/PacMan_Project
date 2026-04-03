@@ -90,6 +90,24 @@ public class Game {
         }
         if (canMove(pacman, pacman.getOrientation())) {
             pacman.move();
+            checkPelletCollision();
         }
     }
+
+
+    public void checkPelletCollision(){
+        Tile current_tile = maze.getTile(pacman.getY(), pacman.getX());
+
+        if (current_tile.getTileType() == Tile.TileType.SMALL_PELLET){
+            current_tile.eat();
+            currentState.handleSmallPelletCollision();
+        }
+
+        else if (current_tile.getTileType() == Tile.TileType.POWER_PELLET){
+            current_tile.eat();
+            currentState.handlePowerPelletCollision();
+        }
+    }
+
+
 }

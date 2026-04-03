@@ -21,8 +21,8 @@ public class Game {
         this.ghosts = new ArrayList<>();
         this.ghosts.add(new Ghost(13, 12, "red"));
         this.ghosts.add(new Ghost(14, 12, "pink"));
-        this.ghosts.add(new Ghost(11, 13, "blue"));
-        this.ghosts.add(new Ghost(12, 13, "yellow"));
+        this.ghosts.add(new Ghost(13, 13, "blue"));
+        this.ghosts.add(new Ghost(14, 13, "yellow"));
     }
 
     public Maze getMaze(){

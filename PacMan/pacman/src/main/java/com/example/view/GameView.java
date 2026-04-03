@@ -1,6 +1,7 @@
 package com.example.view;
 
 import com.example.model.Game;
+import com.example.model.Ghost;
 import com.example.model.Tile;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -72,6 +73,49 @@ public class GameView {
         );
         pacmanView.setFill(Color.YELLOW);
         root.getChildren().add(pacmanView);
+
+        for (Ghost ghost : game.getGhosts()){  // change with DRY principle (for -> switch -> case)
+
+            if (ghost.getColor().equals("red")){
+                Circle redGhostView = new Circle(
+                    ghost.getX() * 20 + 10,
+                    ghost.getY() * 20 + topOffset + 10,
+                    6
+                );
+                redGhostView.setFill(Color.RED);
+                root.getChildren().add(redGhostView);
+            }
+
+            else if(ghost.getColor().equals("pink")){
+                Circle pinkGhostView = new Circle(
+                    ghost.getX() * 20 + 10,
+                    ghost.getY() * 20 + topOffset + 10,
+                    6
+                );
+                pinkGhostView.setFill(Color.PINK);
+                root.getChildren().add(pinkGhostView);
+            }
+
+            else if(ghost.getColor().equals("blue")){
+                Circle blueGhostView = new Circle(
+                    ghost.getX() * 20 + 10,
+                    ghost.getY() * 20 + topOffset + 10,
+                    6
+                );
+                blueGhostView.setFill(Color.CYAN); // to not blend in with background
+                root.getChildren().add(blueGhostView);
+            }
+
+            else if(ghost.getColor().equals("yellow")){
+                Circle yellowGhostView = new Circle(
+                    ghost.getX() * 20 + 10,
+                    ghost.getY() * 20 + topOffset + 10,
+                    6
+                );
+                yellowGhostView.setFill(Color.YELLOW);
+                root.getChildren().add(yellowGhostView);
+            }
+        }
 
         return root;
     }

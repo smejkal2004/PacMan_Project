@@ -46,6 +46,21 @@ public class Game {
     public GameState getCurrentState(){
         return this.currentState;
     }
+    public String getCurrentStateString(){   // change with DRY principle (for -> switch -> case)
+        if(currentState instanceof NormalState){
+            return "Normal";
+        }
+        else if(currentState instanceof ImmuneState){
+            return "Immune";
+        }
+        else if(currentState instanceof PowerState){
+            return "Power";
+        }
+        else if(currentState instanceof FinishedState){
+            return "Finished";
+        }
+        return "unknown";
+    }
     public void setCurrentState(GameState currentState){
         this.currentState = currentState;
     }

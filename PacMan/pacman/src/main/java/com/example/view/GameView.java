@@ -63,7 +63,11 @@ public class GameView {
         livesText.setFill(Color.BLACK);
         livesText.setFont(Font.font("Arial", 18));
 
-        root.getChildren().addAll(scoreText, livesText);
+        Text gameStateText = new Text(385, 20, "Game State: " + game.getCurrentStateString());
+        gameStateText.setFill(Color.BLACK);
+        gameStateText.setFont(Font.font("Arial", 18));
+
+        root.getChildren().addAll(scoreText, livesText, gameStateText);
         
         // Render Pacman
         Circle pacmanView = new Circle(

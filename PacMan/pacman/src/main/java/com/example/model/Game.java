@@ -11,6 +11,7 @@ public class Game {
     private GameState currentState;
     private Pacman pacman;
     private List<Ghost> ghosts;
+    private Boolean isPaused;
 
     public Game() {
         this.maze = new Maze();
@@ -23,6 +24,7 @@ public class Game {
         this.ghosts.add(new Ghost(14, 12, "pink"));
         this.ghosts.add(new Ghost(13, 13, "blue"));
         this.ghosts.add(new Ghost(14, 13, "yellow"));
+        this.isPaused = false;
     }
 
     public Maze getMaze(){
@@ -71,6 +73,14 @@ public class Game {
 
     public List<Ghost> getGhosts(){
         return this.ghosts;
+    }
+
+    public Boolean getIsPaused(){
+        return this.isPaused;
+    }
+
+    public void setIsPaused(Boolean isPaused){
+        this.isPaused = isPaused;
     }
 
     // Pacman movement orientation = Where he is going

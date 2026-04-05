@@ -53,6 +53,15 @@ public class GameView {
                     powerPellet.setFill(Color.WHITE);
                     root.getChildren().add(powerPellet);
                 }
+
+                if (game.getIsPaused() == true){
+                    Text pausedText = new Text(162, 192, "GAME PAUSED");
+                    pausedText.setFill(Color.BLACK);
+                    pausedText.setFont(Font.font("Arial", 32));
+                    Rectangle pausedRectangle = new Rectangle(150, 158, 260, 45);
+                    pausedRectangle.setFill(Color.WHITE);
+                    root.getChildren().addAll(pausedRectangle, pausedText);
+                }
             }
         }
         Text scoreText = new Text(10, 20, "Score: " + game.getScore());

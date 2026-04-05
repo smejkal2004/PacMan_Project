@@ -1,11 +1,15 @@
 package com.example.model;
 
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+
 public class PowerState implements GameState {
 
     private Game game;
 
     public PowerState(Game game){
         this.game = game;
+        startTimer();
     }
     
     @Override
@@ -28,6 +32,12 @@ public class PowerState implements GameState {
     @Override
     public void handleTimeOut(){
         game.setCurrentState(new NormalState(game));
+    }
+
+    private void startTimer(){
+        PauseTransition pause = new PauseTransition(Duration.seconds(10));
+        pause.setOnFinished(e -> handleTimeOut());
+        pause.play();
     }
 
 }

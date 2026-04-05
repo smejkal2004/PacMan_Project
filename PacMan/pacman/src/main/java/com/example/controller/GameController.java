@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.model.Game;
 import com.example.model.Character;
 import com.example.view.GameView;
+import com.example.model.FinishedState;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -23,6 +24,7 @@ public class GameController {
 
     public void start() {
         scene.setOnKeyPressed(event -> {
+            if (game.getCurrentState() instanceof FinishedState) return; // doesn't take input once game is finished
             switch (event.getCode()) {
                 case UP -> game.getPacman().setNextOrientation(Character.Orientation.UP);
                 case DOWN -> game.getPacman().setNextOrientation(Character.Orientation.DOWN);
@@ -33,7 +35,9 @@ public class GameController {
         });
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), e -> {
+            if (!(game.getCurrentState() instanceof FinishedState)){ // stops pacman from moving but still renders game scene
             game.movePacman();
+            }
             scene.setRoot(view.render());
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);

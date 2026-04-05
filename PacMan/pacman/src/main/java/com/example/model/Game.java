@@ -107,6 +107,7 @@ public class Game {
             pacman.move();
             checkPelletCollision();
         }
+        checkGhostCollision(); //outside of if block to allow collision even if pacman does not move
     }
 
 
@@ -121,6 +122,14 @@ public class Game {
         else if (current_tile.getTileType() == Tile.TileType.POWER_PELLET){
             current_tile.eat();
             currentState.handlePowerPelletCollision();
+        }
+    }
+
+    public void checkGhostCollision(){ // will eventually get changed to know which ghost needs to be removed (if in PowerState)
+        for (Ghost ghost : ghosts){
+            if (ghost.getX() == pacman.getX() && ghost.getY() == pacman.getY()){
+                currentState.handleGhostCollision();
+            }
         }
     }
 

@@ -32,6 +32,10 @@ public class GameController {
                 case DOWN -> game.getPacman().setNextOrientation(Character.Orientation.DOWN);
                 case LEFT -> game.getPacman().setNextOrientation(Character.Orientation.LEFT);
                 case RIGHT -> game.getPacman().setNextOrientation(Character.Orientation.RIGHT);
+                case W -> game.getPacman().setNextOrientation(Character.Orientation.UP);
+                case S -> game.getPacman().setNextOrientation(Character.Orientation.DOWN);
+                case A -> game.getPacman().setNextOrientation(Character.Orientation.LEFT);
+                case D -> game.getPacman().setNextOrientation(Character.Orientation.RIGHT);
                 case TAB -> {
                     game.setIsPaused(!game.getIsPaused());
                     if (game.getIsPaused() == true){
@@ -41,7 +45,7 @@ public class GameController {
                         timeline.play();
                     }
                 }
-                case ESCAPE -> Platform.exit();
+                case ESCAPE -> Platform.exit(); // does not work in finishedState
                 default -> {}
             }
         });

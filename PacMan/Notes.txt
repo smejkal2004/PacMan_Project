@@ -118,3 +118,16 @@ What should/could be done next? (as per 25th of March)
 New things: (3.4.26)
 - collision with pellets removes the pellet and adds points (2 for SMALL, 20 for POWER), change of gameState not done
 - ghosts are rendered, not moving tho
+
+Things that need to be done: (7.4.26)
+- redesign top stripe
+- add sprites to all characters
+- make a README
+- make UML
+
+Things that I am currently doing: (7.4.26)
+- Showing a screen after game ends, gives an option to restart/quit
+- Debugging/Finishing:
+    - "esc" isn't working in FinishedState
+    - Finished screen is far from working
+    - change ghost render using DRY

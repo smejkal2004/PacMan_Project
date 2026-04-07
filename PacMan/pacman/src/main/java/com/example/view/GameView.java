@@ -1,8 +1,13 @@
 package com.example.view;
 
+import com.example.model.FinishedState;
 import com.example.model.Game;
+import com.example.model.GameState;
 import com.example.model.Ghost;
 import com.example.model.Tile;
+
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -61,6 +66,19 @@ public class GameView {
                     Rectangle pausedRectangle = new Rectangle(150, 158, 260, 45);
                     pausedRectangle.setFill(Color.WHITE);
                     root.getChildren().addAll(pausedRectangle, pausedText);
+                }
+
+                if (game.getCurrentStateString().equals("Finished")){ // it takes a long time whether I use String or make currentState public and use that instead
+
+                    /*Button restartButton = new Button("Restart (R)");
+                    restartButton.relocate(50, 50);
+                    restartButton.setTextFill(Color.BROWN);
+                    Button quitButton = new Button("Quit (ESC)");
+                    quitButton.setTextFill(Color.BROWN);
+                    Rectangle finishedRectangle = new Rectangle(150, 250, 300, 150);
+                    finishedRectangle.setFill(Color.WHITE);
+                    root.getChildren().addAll(restartButton, quitButton, finishedRectangle);*/
+
                 }
             }
         }

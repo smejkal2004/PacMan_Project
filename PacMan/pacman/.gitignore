@@ -1,2 +1,3 @@
 target/
 *.class
+// Helps run the application without needing to recompile every time

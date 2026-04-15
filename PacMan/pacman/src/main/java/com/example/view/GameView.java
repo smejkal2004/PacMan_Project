@@ -27,7 +27,7 @@ public class GameView {
     public Pane render() {
         Pane root = new Pane();
 
-        int topOffset = 40; // Space for highscore and lives display
+        int topOffset = 40; // Space for highscore and lives display.. will move the lives down in the future
 
         for (int row = 0; row < 31; row++) {
             for (int col = 0; col < 28; col++) {
@@ -105,6 +105,7 @@ public class GameView {
         pacmanView.setFill(Color.YELLOW);
         root.getChildren().add(pacmanView);
 
+<<<<<<< Updated upstream
         for (Ghost ghost : game.getGhosts()){  // change with DRY principle (for -> switch -> case)
 
             if (ghost.getColor().equals("red")){
@@ -148,6 +149,25 @@ public class GameView {
             }
         }
 
+=======
+
+        // Render Ghosts
+        for (var ghost : game.getGhosts()) {
+            Circle ghostView = new Circle(
+                ghost.getX() * 20 + 10, 
+                ghost.getY() * 20 + topOffset + 10,
+                8 
+            );
+            switch (ghost.getColor()) {
+                case "red" -> ghostView.setFill(Color.RED);
+                case "pink" -> ghostView.setFill(Color.PINK);
+                case "blue" -> ghostView.setFill(Color.CYAN);
+                case "yellow" -> ghostView.setFill(Color.ORANGE);
+                default -> ghostView.setFill(Color.GRAY); // When the ghosts are eaten
+            }
+            root.getChildren().add(ghostView);
+        }
+>>>>>>> Stashed changes
         return root;
     }
 }

@@ -32,5 +32,5 @@ public class Main extends Application {
 }
 
 // mvn javafx:run
-
+// mvn clean javafx:run 
 

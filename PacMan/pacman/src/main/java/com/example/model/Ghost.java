@@ -17,5 +17,4 @@ public class Ghost extends Character {
     public Orientation getNextOrientation() {
         return getOrientation(); // placeholder
     }
-
 }

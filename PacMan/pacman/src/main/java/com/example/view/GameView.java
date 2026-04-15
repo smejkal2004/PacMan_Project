@@ -1,13 +1,9 @@
 package com.example.view;
 
-import com.example.model.FinishedState;
 import com.example.model.Game;
-import com.example.model.GameState;
 import com.example.model.Ghost;
 import com.example.model.Tile;
 
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

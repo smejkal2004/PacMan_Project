@@ -62,7 +62,7 @@ public class Maze {
                 grid[row][col] = new Tile(Tile.TileType.POWER_PELLET);
             }
             else if (token.equals("P") || token.equals("Gr") || token.equals("Gp") 
-                || token.equals("Gb") || token.equals("Gy")) {
+                || token.equals("Gb") || token.equals("Go")) {
             grid[row][col] = new Tile(Tile.TileType.EMPTY);
             }
 

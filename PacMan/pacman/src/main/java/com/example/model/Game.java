@@ -22,14 +22,9 @@ public class Game {
         this.ghosts = new ArrayList<>();
         this.ghosts.add(new Ghost(13, 12, "red"));
         this.ghosts.add(new Ghost(14, 12, "pink"));
-<<<<<<< Updated upstream
         this.ghosts.add(new Ghost(13, 13, "blue"));
-        this.ghosts.add(new Ghost(14, 13, "yellow"));
+        this.ghosts.add(new Ghost(14, 13, "orange"));
         this.isPaused = false;
-=======
-        this.ghosts.add(new Ghost(11, 13, "blue")); 
-        this.ghosts.add(new Ghost(12, 13, "yellow"));
->>>>>>> Stashed changes
     }
 
     public Maze getMaze(){
@@ -120,7 +115,6 @@ public class Game {
         }
         if (canMove(pacman, pacman.getOrientation())) {
             pacman.move();
-<<<<<<< Updated upstream
             checkPelletCollision();
         }
         checkGhostCollision(); //outside of if block to allow collision even if pacman does not move
@@ -138,22 +132,6 @@ public class Game {
         else if (current_tile.getTileType() == Tile.TileType.POWER_PELLET){
             current_tile.eat();
             currentState.handlePowerPelletCollision();
-=======
-            handlePacmanTile();
-        }
-    }
-    public void handlePacmanTile() { // Updates the tiles if pacman eats a pellet and updates the score 
-        int x = pacman.getX();
-        int y = pacman.getY();
-        Tile tile = maze.getTile(y, x);
-
-        if (tile.getTileType() == Tile.TileType.SMALL_PELLET) { 
-            currentState.handleSmallPelletCollision();
-            maze.setTile(y, x, new Tile(Tile.TileType.EMPTY));
-        } else if (tile.getTileType() == Tile.TileType.POWER_PELLET) {
-            currentState.handlePowerPelletCollision();
-            maze.setTile(y, x, new Tile(Tile.TileType.EMPTY));
->>>>>>> Stashed changes
         }
     }
 

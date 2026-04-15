@@ -131,3 +131,33 @@ Things that I am currently doing: (7.4.26)
     - "esc" isn't working in FinishedState
     - Finished screen is far from working
     - change ghost render using DRY
+------------------------------------------------------------------------------------------------------
+To do:
+
+- Render Pacman & ghosts - Working on it
+ + Pacman movement is weird, pressing left or right when it is going straight moves the images 
+ + AI for ghosts, 4 different ones - Working on it
+  - Note: I can make 2 of the AI's and you can make 2 AI's (if you want)
+ + Points for eating multiple ghosts (200,400,800,1600)
+   - Note: has to be from one power pellet immune state
+ + Ghosts return "home" and return as normal ghosts, respawn timer?
+
+- Fix map: 
+ + Wall images?
+ + tunnel in the map
+ + tunnel makes ghosts and pacman appear on the other side of the tunnel
+
+- Fix top: 
+ + (Highscore middle), no need to mention Normal state, powerstate etc.
+ + Show lifes as number of Pacmans 
+ + If Pacman is killed then the map does not completely reset (The uneated pellets are still there)
+
+- Add Cherry?
+ + Cherry is 100 points (location: center of the maze)
+
+- Add extra lifes to Pacman if you succeed to eat all the pellets
+
+
+
+Additional if time and will: 
+- Add levels that are not always the same 

@@ -15,13 +15,39 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.shape.Circle;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 
 public class GameView {
 
     private Game game;
 
+      // Pacman images
+        private Image pacmanUpImage;
+        private Image pacmanDownImage;
+        private Image pacmanLeftImage;
+        private Image pacmanRightImage;
+
+        // Ghost images
+        private Image blueGhostImage;
+        private Image orangeGhostImage;
+        private Image redGhostImage;
+        private Image pinkGhostImage;
+        //private Image scaredGhostImage;
+
     public GameView(Game game) {
         this.game = game;
+            pacmanUpImage = new Image(getClass().getResourceAsStream("/images/pacmanUp.png"));
+            pacmanDownImage = new Image(getClass().getResourceAsStream("/images/pacmanDown.png"));
+            pacmanLeftImage = new Image(getClass().getResourceAsStream("/images/pacmanLeft.png"));
+            pacmanRightImage = new Image(getClass().getResourceAsStream("/images/pacmanRight.png"));
+
+            blueGhostImage = new Image(getClass().getResourceAsStream("/images/blueGhost.png"));
+            orangeGhostImage = new Image(getClass().getResourceAsStream("/images/orangeGhost.png"));
+            redGhostImage = new Image(getClass().getResourceAsStream("/images/redGhost.png"));
+            pinkGhostImage = new Image(getClass().getResourceAsStream("/images/pinkGhost.png"));
+            //scaredGhostImage = new Image(getClass().getResourceAsStream("/images/scaredGhost.png")°;
     }
 
     public Pane render() {
@@ -95,79 +121,56 @@ public class GameView {
         gameStateText.setFont(Font.font("Arial", 18));
 
         root.getChildren().addAll(scoreText, livesText, gameStateText);
-        
-        // Render Pacman
-        Circle pacmanView = new Circle(
-            game.getPacman().getX() * 20 + 10, 
-            game.getPacman().getY() * 20 + topOffset + 10,
-            8 
-        );
-        pacmanView.setFill(Color.YELLOW);
+
+        //Render Pacman
+        Image pacmanImage = pacmanLeftImage; // default image
+
+        switch (game.getPacman().getNextOrientation()){ 
+            case UP: pacmanImage = pacmanUpImage;
+                break;
+            case DOWN: pacmanImage = pacmanDownImage;
+                break;
+            case LEFT: pacmanImage = pacmanLeftImage;
+                break;
+            case RIGHT: pacmanImage = pacmanRightImage;
+                break;
+        // Also needs to add WASD
+        }
+
+        ImageView pacmanView = new ImageView(pacmanImage);
+        pacmanView.setX(game.getPacman().getX() * 20);
+        pacmanView.setY(game.getPacman().getY() * 20 + topOffset);
+        pacmanView.setFitWidth(20);
+        pacmanView.setFitHeight(20);
         root.getChildren().add(pacmanView);
 
-<<<<<<< Updated upstream
+
         for (Ghost ghost : game.getGhosts()){  // change with DRY principle (for -> switch -> case)
-
+            Image ghostImage = null;
             if (ghost.getColor().equals("red")){
-                Circle redGhostView = new Circle(
-                    ghost.getX() * 20 + 10,
-                    ghost.getY() * 20 + topOffset + 10,
-                    6
-                );
-                redGhostView.setFill(Color.RED);
-                root.getChildren().add(redGhostView);
+                ghostImage = redGhostImage;
+                } else if (ghost.getColor().equals("orange")){
+                   ghostImage = orangeGhostImage; 
+                } else if (ghost.getColor().equals("blue")){
+                   ghostImage = blueGhostImage;
+                } else if (ghost.getColor().equals("pink")){
+                    ghostImage = pinkGhostImage;
+                }
+            if (ghostImage != null){
+                ImageView ghostView = new ImageView(ghostImage);
+                ghostView.setX(ghost.getX() * 20);
+                ghostView.setY(ghost.getY() * 20 + topOffset);
+                ghostView.setFitWidth(20);
+                ghostView.setFitHeight(20);
+                root.getChildren().add(ghostView);
             }
-
-            else if(ghost.getColor().equals("pink")){
-                Circle pinkGhostView = new Circle(
-                    ghost.getX() * 20 + 10,
-                    ghost.getY() * 20 + topOffset + 10,
-                    6
-                );
-                pinkGhostView.setFill(Color.PINK);
-                root.getChildren().add(pinkGhostView);
-            }
-
-            else if(ghost.getColor().equals("blue")){
-                Circle blueGhostView = new Circle(
-                    ghost.getX() * 20 + 10,
-                    ghost.getY() * 20 + topOffset + 10,
-                    6
-                );
-                blueGhostView.setFill(Color.CYAN); // to not blend in with background
-                root.getChildren().add(blueGhostView);
-            }
-
-            else if(ghost.getColor().equals("yellow")){
-                Circle yellowGhostView = new Circle(
-                    ghost.getX() * 20 + 10,
-                    ghost.getY() * 20 + topOffset + 10,
-                    6
-                );
-                yellowGhostView.setFill(Color.YELLOW);
-                root.getChildren().add(yellowGhostView);
-            }
-        }
-
-=======
-
-        // Render Ghosts
-        for (var ghost : game.getGhosts()) {
-            Circle ghostView = new Circle(
-                ghost.getX() * 20 + 10, 
-                ghost.getY() * 20 + topOffset + 10,
-                8 
-            );
-            switch (ghost.getColor()) {
-                case "red" -> ghostView.setFill(Color.RED);
-                case "pink" -> ghostView.setFill(Color.PINK);
-                case "blue" -> ghostView.setFill(Color.CYAN);
-                case "yellow" -> ghostView.setFill(Color.ORANGE);
-                default -> ghostView.setFill(Color.GRAY); // When the ghosts are eaten
-            }
-            root.getChildren().add(ghostView);
-        }
->>>>>>> Stashed changes
-        return root;
-    }
+         }
+                // Needs scared ghost also
+         return root;
+}        
 }
+ 
+
+
+
+

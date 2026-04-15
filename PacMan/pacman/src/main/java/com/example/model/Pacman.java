@@ -4,9 +4,11 @@ public class Pacman extends Character {
 
     private Orientation nextOrientation;
 
+
     public Pacman(){
         super(14, 21, Orientation.UP);
         this.nextOrientation = Orientation.UP;
+        
     }
 
     public void setNextOrientation(Orientation nextOrientation){

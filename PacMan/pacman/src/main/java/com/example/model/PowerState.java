@@ -16,7 +16,7 @@ public class PowerState implements GameState {
     public void handleGhostCollision(){
         // need a method that removes a ghost (placeholder)
         game.setScore(game.getScore() + 50);
-        // Add additional score for eating multiple ghosts
+        // Add additional score for eating multiple ghosts 200/400/800/1600
 
     }
 

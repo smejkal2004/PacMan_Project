@@ -3,6 +3,9 @@ package com.example.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+
 public class Game {
 
     private Maze maze;
@@ -20,11 +23,12 @@ public class Game {
         this.currentState = new NormalState(this);
         this.pacman = new Pacman();
         this.ghosts = new ArrayList<>();
-        this.ghosts.add(new Ghost(13, 12, "red"));
-        this.ghosts.add(new Ghost(14, 12, "pink"));
-        this.ghosts.add(new Ghost(13, 13, "blue"));
-        this.ghosts.add(new Ghost(14, 13, "orange"));
+        this.ghosts.add(new Ghost(13, 12, "red", 27, 0));
+        this.ghosts.add(new Ghost(14, 12, "pink", 0, 0));
+        this.ghosts.add(new Ghost(13, 13, "blue", 27, 30));
+        this.ghosts.add(new Ghost(14, 13, "orange", 0, 30));
         this.isPaused = false;
+        startGhostModeCycle(); 
     }
 
     public Maze getMaze(){
@@ -109,6 +113,7 @@ public class Game {
 }
     // Pacman movement requested = Where the player makes him go
     public void movePacman() {
+        checkGhostCollision();
         Character.Orientation requested = pacman.getNextOrientation();
         if (canMove(pacman, requested)) {
             pacman.setOrientation(requested);
@@ -135,6 +140,92 @@ public class Game {
         }
     }
 
+    public void moveGhosts() { // Calculates the best orientation for each ghost and moves them towards Pacman
+        for (Ghost ghost : ghosts) {
+            Character.Orientation bestDirection = getBestGhostOrientation(ghost);
+
+                if (bestDirection != null) { 
+                    ghost.setOrientation(bestDirection);
+                    ghost.move();
+                }
+                checkGhostCollision(); // This also allows Pacman to eat multiple ghosts when in PowerState
+        }
+    }
+
+    private Character.Orientation getBestGhostOrientation(Ghost ghost) { 
+        Character.Orientation[] directions = {
+            Character.Orientation.UP,
+            Character.Orientation.DOWN,
+            Character.Orientation.LEFT,
+            Character.Orientation.RIGHT
+        };
+        
+        Character.Orientation reverse = getReverseDirection(ghost.getOrientation()); 
+
+        int targetX;
+        int targetY;
+
+        if (ghost.getMode() == GhostMode.SCATTER) {
+            targetX = ghost.getScatterTargetX();
+            targetY = ghost.getScatterTargetY();
+        } else {
+            targetX = pacman.getX();
+            targetY = pacman.getY();
+        }
+
+        Character.Orientation bestDirection = null;
+        double bestDistance = Double.MAX_VALUE; // Initialize with a very large distance 
+
+        for (Character.Orientation direction : directions) {
+            if (direction == reverse) {
+                continue;
+            }
+
+            if (!canMove(ghost, direction)) {
+                continue;
+
+            }
+
+            int nextX = ghost.getX();
+            int nextY = ghost.getY();
+
+            switch (direction) { // Calculates the next posistion based on the direction
+                case UP -> nextY--;
+                case DOWN -> nextY++;
+                case LEFT -> nextX--;
+                case RIGHT -> nextX++;
+            }
+            
+            double distance = Math.sqrt(
+                Math.pow(targetX - nextX, 2) +
+                Math.pow(targetY - nextY, 2)
+            );
+
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                bestDirection = direction;
+
+            }
+        }
+        if (bestDirection == null) {
+            for (Character.Orientation direction : directions) {
+                if (canMove(ghost, direction)) {
+                    return direction;
+                }
+            }
+        }
+        return bestDirection;
+    }
+
+    private Character.Orientation getReverseDirection(Character.Orientation orientation) {
+        return switch (orientation) {
+            case UP -> Character.Orientation.DOWN;
+            case DOWN -> Character.Orientation.UP;
+            case LEFT -> Character.Orientation.RIGHT;
+            case RIGHT -> Character.Orientation.LEFT;
+        };
+    }
+
     public void checkGhostCollision(){ // will eventually get changed to know which ghost needs to be removed (if in PowerState)
         for (Ghost ghost : ghosts){
             if (ghost.getX() == pacman.getX() && ghost.getY() == pacman.getY()){
@@ -143,5 +234,35 @@ public class Game {
         }
     }
 
+    public void startGhostModeCycle() {
+        for (Ghost ghost : ghosts) {
+            ghost.setMode(GhostMode.SCATTER);
+        }
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(10)); // Makes scatter mode last for 10 sec
+
+        pause.setOnFinished(e -> { 
+            for (Ghost ghost : ghosts) {
+                ghost.setMode(GhostMode.CHASE);
+            }
+        });
+        pause.play();
+    }
+
+    public void resetCharactersAfterDeath() {
+        pacman.setX(14);
+        pacman.setY(21);
+        pacman.setOrientation(Character.Orientation.UP);
+        pacman.setNextOrientation(Character.Orientation.UP);
+
+        ghosts.clear();
+        
+        this.ghosts.add(new Ghost(13, 12, "red", 27, 0));
+        this.ghosts.add(new Ghost(14, 12, "pink", 0, 0));
+        this.ghosts.add(new Ghost(13, 13, "blue", 27, 30));
+        this.ghosts.add(new Ghost(14, 13, "orange", 0, 30));
+
+        startGhostModeCycle();
+    }
 
 }

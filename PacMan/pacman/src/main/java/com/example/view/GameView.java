@@ -130,7 +130,7 @@ public class GameView {
                 break;
             case RIGHT: pacmanImage = pacmanRightImage;
                 break;
-        // Also needs to add WASD
+
         }
 
         ImageView pacmanView = new ImageView(pacmanImage);

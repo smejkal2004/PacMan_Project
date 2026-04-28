@@ -15,6 +15,7 @@ public class NormalState implements GameState {
             game.setCurrentState(new FinishedState(game));
         }
         else {
+            game.resetCharactersAfterDeath();
             game.setCurrentState(new ImmuneState(game));
         }
     }

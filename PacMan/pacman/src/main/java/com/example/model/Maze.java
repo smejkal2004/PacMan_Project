@@ -5,6 +5,7 @@ public class Maze {
     private Tile[][] grid;
 
     private static final String[] layout = {
+    
     "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1",
     "1 s s s s s s s s s s s s 1 1 s s s s s s s s s s s s 1",
     "1 s 1 1 1 1 s 1 1 1 1 1 s 1 1 s 1 1 1 1 1 s 1 1 1 1 s 1",
@@ -36,12 +37,13 @@ public class Maze {
     "1 s 1 1 1 1 1 s 1 1 1 1 1 1 1 1 1 1 1 1 s 1 1 1 1 1 s 1",
     "1 s s s s s s s s s s s s s s s s s s s s s s s s s s 1",
     "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"
-};
+    
+    };
 
     // constructor - converts layout into Tile[][] grid
     public Maze() {
     // initialises the grid
-    grid = new Tile[31][28];
+    grid = new Tile[layout.length][28];
     
     // loops through layout and fills it
     for (int row = 0; row < layout.length; row++) {

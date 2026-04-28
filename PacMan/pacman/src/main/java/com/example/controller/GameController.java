@@ -53,6 +53,7 @@ public class GameController {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), e -> {
             if (!game.getIsPaused() && !(game.getCurrentState() instanceof FinishedState)){ // stops pacman from moving but still renders game scene if game finished or paused
             game.movePacman();
+            game.moveGhosts();
             }
             scene.setRoot(view.render());
         }));

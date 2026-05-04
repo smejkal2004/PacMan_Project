@@ -23,10 +23,10 @@ public class Game {
         this.currentState = new NormalState(this);
         this.pacman = new Pacman();
         this.ghosts = new ArrayList<>();
-        this.ghosts.add(new Ghost(13, 12, "red", 27, 0));
-        this.ghosts.add(new Ghost(14, 12, "pink", 0, 0));
-        this.ghosts.add(new Ghost(13, 13, "blue", 27, 30));
-        this.ghosts.add(new Ghost(14, 13, "orange", 0, 30));
+        this.ghosts.add(new Ghost(8, 9, "red", 18, 0));
+        this.ghosts.add(new Ghost(10, 9, "pink", 18, 20));
+        this.ghosts.add(new Ghost(9, 9, "blue", 0, 0));
+        this.ghosts.add(new Ghost(11, 9, "orange", 0, 20));
         this.isPaused = false;
         startGhostModeCycle(); 
     }
@@ -103,7 +103,7 @@ public class Game {
         }
 
     // Check bounds
-        if (newY < 0 || newY >= 31 || newX < 0 || newX >= 28) {
+        if (newY < 0 || newY >= maze.getRows() || newX < 0 || newX >= maze.getCols()) {
         return false;
         }
 
@@ -239,7 +239,7 @@ public class Game {
             ghost.setMode(GhostMode.SCATTER);
         }
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(10)); // Makes scatter mode last for 10 sec
+        PauseTransition pause = new PauseTransition(Duration.seconds(7)); // Makes scatter mode last for 10 sec
 
         pause.setOnFinished(e -> { 
             for (Ghost ghost : ghosts) {
@@ -250,17 +250,17 @@ public class Game {
     }
 
     public void resetCharactersAfterDeath() {
-        pacman.setX(14);
-        pacman.setY(21);
+        pacman.setX(9);
+        pacman.setY(15);
         pacman.setOrientation(Character.Orientation.UP);
         pacman.setNextOrientation(Character.Orientation.UP);
 
         ghosts.clear();
         
-        this.ghosts.add(new Ghost(13, 12, "red", 27, 0));
-        this.ghosts.add(new Ghost(14, 12, "pink", 0, 0));
-        this.ghosts.add(new Ghost(13, 13, "blue", 27, 30));
-        this.ghosts.add(new Ghost(14, 13, "orange", 0, 30));
+        this.ghosts.add(new Ghost(8, 9, "red", 18, 0));
+        this.ghosts.add(new Ghost(10, 9, "pink", 18, 20));
+        this.ghosts.add(new Ghost(9, 9, "blue", 0, 0));
+        this.ghosts.add(new Ghost(11, 9, "orange", 0, 20));
 
         startGhostModeCycle();
     }

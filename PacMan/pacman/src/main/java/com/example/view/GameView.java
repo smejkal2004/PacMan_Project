@@ -32,6 +32,12 @@ public class GameView {
         private Image pinkGhostImage;
         //private Image scaredGhostImage;
 
+        // Maze Image
+        private Image WallImage;
+        
+        // Cherry image
+        // private Image CherryImage;
+
     public GameView(Game game) {
         this.game = game;
             pacmanUpImage = new Image(getClass().getResourceAsStream("/images/pacmanUp.png"));
@@ -43,38 +49,42 @@ public class GameView {
             orangeGhostImage = new Image(getClass().getResourceAsStream("/images/orangeGhost.png"));
             redGhostImage = new Image(getClass().getResourceAsStream("/images/redGhost.png"));
             pinkGhostImage = new Image(getClass().getResourceAsStream("/images/pinkGhost.png"));
-            //scaredGhostImage = new Image(getClass().getResourceAsStream("/images/scaredGhost.png")°;
+            //scaredGhostImage = new Image(getClass().getResourceAsStream("/images/scaredGhost.png"));
+            WallImage = new Image(getClass().getResourceAsStream("/images/wall.png"));
+            //CherryImage = new Image(getClass().getResourceAsStream("/images/cherry.png"));
     }
 
     public Pane render() {
         Pane root = new Pane();
 
-        int topOffset = 40; // Space for highscore and lives display.. will move the lives down in the future
+        root.setStyle("-fx-background-color: black;"); // Makes the entire background black
 
-        for (int row = 0; row < 31; row++) {
-            for (int col = 0; col < 28; col++) {
+ 
+        int topOffset = 40; // Space for highscore and lives display
+
+        for (int row = 0; row < game.getMaze().getRows(); row++) {
+            for (int col = 0; col < game.getMaze().getCols(); col++) {
                 Tile tile = game.getMaze().getTile(row, col);
-                Color color;
+                
 
-                if (tile == null) {
-                    System.out.println("NULL tile at row=" + row + " col=" + col);
-                    continue; // method to debug maze.java (can be deleted once maze design fully finished)
-                }
+                if (tile.getTileType() == Tile.TileType.WALL) { // Converts wall into image instead of rectangle
+                    ImageView wallView = new ImageView(WallImage);
+                    wallView.setX(col * 20);
+                    wallView.setY(row * 20 + topOffset);
+                    wallView.setFitWidth(20);
+                    wallView.setFitHeight(20);
+                    root.getChildren().add(wallView);
+                } 
+                else {
+                    Rectangle rect = new Rectangle(col * 20, row * 20 + topOffset, 20, 20);
+                    rect.setFill(Color.BLACK);
+                    root.getChildren().add(rect);
 
-                if (tile.getTileType() == Tile.TileType.WALL) {
-                    color = Color.BLUE;
-                } else {
-                    color = Color.BLACK;
-                }
-                Rectangle rect = new Rectangle(col * 20, row * 20 + topOffset, 20, 20);
-                rect.setFill(color);
-                root.getChildren().add(rect);
-
-                if (tile.getTileType() == Tile.TileType.SMALL_PELLET) {
-                    Circle pellet = new Circle(col * 20 + 10, row * 20 + topOffset + 10, 3);
-                    pellet.setFill(Color.WHITE);
-                    root.getChildren().add(pellet);
-                    } 
+                    if (tile.getTileType() == Tile.TileType.SMALL_PELLET) {
+                        Circle pellet = new Circle(col * 20 + 10, row * 20 + topOffset + 10, 3);
+                        pellet.setFill(Color.WHITE);
+                        root.getChildren().add(pellet);
+                } 
                 else if (tile.getTileType() == Tile.TileType.POWER_PELLET) {
                     Circle powerPellet = new Circle(col * 20 + 10, row * 20 + topOffset + 10, 6);
                     powerPellet.setFill(Color.WHITE);
@@ -82,10 +92,10 @@ public class GameView {
                 }
 
                 if (game.getIsPaused() == true){
-                    Text pausedText = new Text(162, 192, "GAME PAUSED");
+                    Text pausedText = new Text(110, 260, "GAME PAUSED");
                     pausedText.setFill(Color.BLACK);
                     pausedText.setFont(Font.font("Arial", 32));
-                    Rectangle pausedRectangle = new Rectangle(150, 158, 260, 45);
+                    Rectangle pausedRectangle = new Rectangle(110, 225, 260, 45);
                     pausedRectangle.setFill(Color.WHITE);
                     root.getChildren().addAll(pausedRectangle, pausedText);
                 }
@@ -102,21 +112,33 @@ public class GameView {
                     root.getChildren().addAll(restartButton, quitButton, finishedRectangle);*/
 
                 }
+
+                }
             }
         }
-        Text scoreText = new Text(10, 20, "Score: " + game.getScore());
-        scoreText.setFill(Color.BLACK);
+        Text scoreText = new Text(140, 20, "HIGH SCORE: " + game.getScore());
+        scoreText.setFill(Color.WHITE);
         scoreText.setFont(Font.font("Arial", 18));
 
-        Text livesText = new Text(150, 20, "Lives: " + game.getLives());
-        livesText.setFill(Color.BLACK);
-        livesText.setFont(Font.font("Arial", 18));
 
+        int lives = game.getLives(); // Uses image of Pacman instead of text
+
+        for (int i = 0; i < lives; i++){
+            ImageView life = new ImageView(pacmanLeftImage);
+            life.setFitWidth(20);
+            life.setFitHeight(20);
+
+            life.setX(10 + i * 25); // Adjust spacing between life icons
+            life.setY(470); // Position above the score text
+            root.getChildren().add(life);
+        }
+        /* 
+        // Will erase when all the states are working as planned
         Text gameStateText = new Text(385, 20, "Game State: " + game.getCurrentStateString());
-        gameStateText.setFill(Color.BLACK);
-        gameStateText.setFont(Font.font("Arial", 18));
+        gameStateText.setFill(Color.WHITE);
+        gameStateText.setFont(Font.font("Arial", 18));*/
 
-        root.getChildren().addAll(scoreText, livesText, gameStateText);
+        root.getChildren().addAll(scoreText ); // gameStateText 
 
         //Render Pacman
         Image pacmanImage = pacmanLeftImage; // default image
@@ -160,10 +182,10 @@ public class GameView {
                 ghostView.setFitHeight(20);
                 root.getChildren().add(ghostView);
             }
-         }
+        }
                 // Needs scared ghost also
          return root;
-}        
+    }        
 }
  
 

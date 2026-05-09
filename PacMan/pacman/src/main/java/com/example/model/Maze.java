@@ -73,14 +73,28 @@ public class Maze {
         return grid[0].length;
     }
 
-    // getter for a specific tile
+    // Getter for a specific tile
     public Tile getTile(int row, int col) {
         return grid[row][col];
     }
     public void setTile(int row, int col, Tile tile) {
         grid[row][col] = tile;
     }
-}
+    // Tunnel check method 
+    public boolean isTunnelTile(int row, int col) {
+        return (row == 9 && (col == 0 || col == getCols() - 1));
+    }
+    // Determines the other side of the tunnel given the current column
+    public int getToOtherTunnelSide(int col) {
+        if (col == 0) {
+            return getCols() - 1;
+        } else {
+            return 0;
+        }
+        }
+    }
+
+
 
 /* New map: 
     "XXXXXXXXXXXXXXXXXXX",
@@ -94,7 +108,7 @@ public class Maze {
     "XXXX.X XXrXX X.XXXX",
     "0      XbpoX      0",
     "XXXX.X XXXXX X.XXXX",
-    "000X.X   C   X.X000",
+    "000X.X       X.X000",
     "XXXX.X XXXXX X.XXXX",
     "X........X........X",
     "X.XX.XXX.X.XXX.XX.X",
@@ -104,6 +118,7 @@ public class Maze {
     "X.XXXXXX.X.XXXXXX.X",
     "X.................X",
     "XXXXXXXXXXXXXXXXXXX" 
+
     Legend:
     X  = wall
     0  = empty space (no pellet)
@@ -114,7 +129,7 @@ public class Maze {
     p = Pink ghost starting position
     b = Blue ghost starting position
     o = Orange ghost starting position
-    C = Cherry (Will add later)*/
+    */
 
 
 

@@ -34,9 +34,25 @@ public class Ghost extends Character {
     public int getScatterTargetY() {
         return this.scatterTargetY;
     }
+
+    public boolean IsScared() {
+        return mode == GhostMode.FRIGHTENED;
+    }
     
+    private boolean active = true;
+
+    public boolean isActive() { 
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public Orientation getNextOrientation() {
         return getOrientation(); // placeholder
     }
+
+   
 }

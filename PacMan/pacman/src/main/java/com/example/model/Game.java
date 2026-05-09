@@ -14,19 +14,23 @@ public class Game {
     private GameState currentState;
     private Pacman pacman;
     private List<Ghost> ghosts;
+    private int ghostMoveCounter; 
+    private int PacmanEatsGhostsScore;
     private Boolean isPaused;
+    private PauseTransition ghostModePause;
+    private PauseTransition powerModePause;
+
 
     public Game() {
         this.maze = new Maze();
         this.lives = 2;
         this.score = 0;
+        this.PacmanEatsGhostsScore = 200;
         this.currentState = new NormalState(this);
         this.pacman = new Pacman();
         this.ghosts = new ArrayList<>();
-        this.ghosts.add(new Ghost(8, 9, "red", 18, 0));
-        this.ghosts.add(new Ghost(10, 9, "pink", 18, 20));
-        this.ghosts.add(new Ghost(9, 9, "blue", 0, 0));
-        this.ghosts.add(new Ghost(11, 9, "orange", 0, 20));
+        this.ghostMoveCounter = 0;
+        spawnGhosts();
         this.isPaused = false;
         startGhostModeCycle(); 
     }
@@ -87,7 +91,7 @@ public class Game {
         this.isPaused = isPaused;
     }
 
-    // Pacman movement orientation = Where he is going
+    // Pacman movement orientation request = Where the player wants Pacman to go
     public boolean canMove(Character character, Character.Orientation orientation) {
     int newX = character.getX();
     int newY = character.getY();
@@ -102,10 +106,17 @@ public class Game {
         newX += 1;
         }
 
+
+      
     // Check bounds
-        if (newY < 0 || newY >= maze.getRows() || newX < 0 || newX >= maze.getCols()) {
+    if (newX < 0 || newX >= maze.getCols()) {
+        return newY == 9;
+    }
+
+    if (newY < 0 || newY >= maze.getRows()) {
         return false;
-        }
+    }
+
 
     // Check for wall
         return maze.getTile(newY, newX).getTileType() != Tile.TileType.WALL;
@@ -115,11 +126,15 @@ public class Game {
     public void movePacman() {
         checkGhostCollision();
         Character.Orientation requested = pacman.getNextOrientation();
+        
         if (canMove(pacman, requested)) {
             pacman.setOrientation(requested);
         }
+    
+
         if (canMove(pacman, pacman.getOrientation())) {
             pacman.move();
+            handleTunnel(pacman);
             checkPelletCollision();
         }
         checkGhostCollision(); //outside of if block to allow collision even if pacman does not move
@@ -137,16 +152,36 @@ public class Game {
         else if (current_tile.getTileType() == Tile.TileType.POWER_PELLET){
             current_tile.eat();
             currentState.handlePowerPelletCollision();
+            activatePowerState();
+        }
+        if (allPelletsEaten()){
+            resetGame();
         }
     }
 
-    public void moveGhosts() { // Calculates the best orientation for each ghost and moves them towards Pacman
+    public void moveGhosts() { 
+        ghostMoveCounter++;
+
         for (Ghost ghost : ghosts) {
+
+            if (!ghost.isActive()) {
+                continue;
+            }
+            if (ghost.getMode() == GhostMode.FRIGHTENED) {
+             if (ghostMoveCounter % 2 != 0) { // This makes scared ghosts move at half speed (every other turn)
+                continue;
+                }
+            }
             Character.Orientation bestDirection = getBestGhostOrientation(ghost);
 
                 if (bestDirection != null) { 
                     ghost.setOrientation(bestDirection);
-                    ghost.move();
+                    
+
+                    if (canMove(ghost, ghost.getOrientation())) {
+                        ghost.move();
+                        handleTunnel(ghost);
+                    }
                 }
                 checkGhostCollision(); // This also allows Pacman to eat multiple ghosts when in PowerState
         }
@@ -174,7 +209,14 @@ public class Game {
         }
 
         Character.Orientation bestDirection = null;
-        double bestDistance = Double.MAX_VALUE; // Initialize with a very large distance 
+
+        double bestDistance;
+        
+        if (ghost.getMode() == GhostMode.FRIGHTENED) {
+            bestDistance = -1; 
+           } else {
+            bestDistance = Double.MAX_VALUE; 
+        }
 
         for (Character.Orientation direction : directions) {
             if (direction == reverse) {
@@ -183,7 +225,6 @@ public class Game {
 
             if (!canMove(ghost, direction)) {
                 continue;
-
             }
 
             int nextX = ghost.getX();
@@ -196,10 +237,27 @@ public class Game {
                 case RIGHT -> nextX++;
             }
             
+           if (nextY == 9) { // This allows ghosts to also use the tunnels
+                if (nextX < 0) {
+                    nextX = maze.getCols() - 1;
+                } else if (nextX >= maze.getCols()) {
+                    nextX = 0;
+                }
+            }
+           
+           
             double distance = Math.sqrt(
                 Math.pow(targetX - nextX, 2) +
                 Math.pow(targetY - nextY, 2)
             );
+
+            if (ghost.getMode() == GhostMode.FRIGHTENED) {
+                if (distance > bestDistance) { // In frightened mode ghosts will move away from Pacman 
+                    bestDistance = distance;
+                    bestDirection = direction;
+                }
+
+            } else {
 
             if (distance < bestDistance) {
                 bestDistance = distance;
@@ -208,12 +266,16 @@ public class Game {
             }
         }
         if (bestDirection == null) {
-            for (Character.Orientation direction : directions) {
-                if (canMove(ghost, direction)) {
-                    return direction;
+
+            for (Character.Orientation ScaredDirection : directions) {
+                
+                if (canMove(ghost, ScaredDirection)) {
+                    return ScaredDirection;
                 }
             }
         }
+
+    }
         return bestDirection;
     }
 
@@ -228,41 +290,162 @@ public class Game {
 
     public void checkGhostCollision(){ // will eventually get changed to know which ghost needs to be removed (if in PowerState)
         for (Ghost ghost : ghosts){
+
+            if (!ghost.isActive()) {
+                continue;
+            }
             if (ghost.getX() == pacman.getX() && ghost.getY() == pacman.getY()){
+                
+                if (ghost.getMode() == GhostMode.FRIGHTENED) {
+                    score += PacmanEatsGhostsScore;
+                    PacmanEatsGhostsScore *= 2;
+                }
+
+                if (ghost.getMode() == GhostMode.FRIGHTENED){
+                    ghost.setActive(false); // This makes the ghost disappear instead of resetting its position when eaten by Pacman
+
+                    PauseTransition respawnPause = new PauseTransition(Duration.seconds(5));
+                    respawnPause.setOnFinished(e -> {
+                        ghost.setX(9);
+                        ghost.setY(9);
+
+                        ghost.setMode(GhostMode.CHASE);
+                        ghost.setActive(true);
+                    });
+
+                    respawnPause.play();
+
+                    return;
+                }
+
                 currentState.handleGhostCollision();
+                return;
             }
         }
     }
 
     public void startGhostModeCycle() {
+        if (ghostModePause != null) {
+            ghostModePause.stop();
+        }
+        
         for (Ghost ghost : ghosts) {
             ghost.setMode(GhostMode.SCATTER);
         }
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(7)); // Makes scatter mode last for 10 sec
+        ghostModePause = new PauseTransition(Duration.seconds(10)); // Makes scatter mode last for 10 sec
 
-        pause.setOnFinished(e -> { 
+        ghostModePause.setOnFinished(e -> { 
             for (Ghost ghost : ghosts) {
                 ghost.setMode(GhostMode.CHASE);
             }
         });
-        pause.play();
+        ghostModePause.play();
+    }
+
+
+    public void activatePowerState() {
+        PacmanEatsGhostsScore = 200; // Resets score for eating ghosts when Pacman enter powerstate
+
+        if (ghostModePause != null) {
+            ghostModePause.stop();
+        }
+
+        for (Ghost ghost : ghosts) {
+            ghost.setMode(GhostMode.FRIGHTENED);
+        }
+        powerModePause = new PauseTransition(Duration.seconds(15)); // PowerState lasts for 15 sec
+
+        powerModePause.setOnFinished(e -> {
+            for (Ghost ghost : ghosts) {
+                ghost.setMode(GhostMode.CHASE);
+            }
+        });
+        powerModePause.play();
     }
 
     public void resetCharactersAfterDeath() {
+        if (ghostModePause != null) {
+            ghostModePause.stop();
+        }
+        if (powerModePause != null) {
+            powerModePause.stop();
+        }
         pacman.setX(9);
         pacman.setY(15);
         pacman.setOrientation(Character.Orientation.UP);
         pacman.setNextOrientation(Character.Orientation.UP);
 
-        ghosts.clear();
-        
-        this.ghosts.add(new Ghost(8, 9, "red", 18, 0));
-        this.ghosts.add(new Ghost(10, 9, "pink", 18, 20));
-        this.ghosts.add(new Ghost(9, 9, "blue", 0, 0));
-        this.ghosts.add(new Ghost(11, 9, "orange", 0, 20));
+        spawnGhosts();
 
         startGhostModeCycle();
     }
 
+    private void spawnGhosts() {
+        ghosts.clear();
+
+        this.ghosts.add(new Ghost(8, 9, "red", 18, 0));
+        this.ghosts.add(new Ghost(10, 9, "pink", 18, 20));
+        this.ghosts.add(new Ghost(9, 9, "blue", 0, 0));
+        this.ghosts.add(new Ghost(11, 9, "orange", 0, 20));
+        }
+     
+        // This method allows Pacman and ghosts to go through the tunnels   
+   private void handleTunnel(Character character) {
+    int tunnelRow = 9; // Both tunnels are at row 9 
+    int leftTunnelX = 0;
+    int rightTunnelX = maze.getCols() - 1;
+
+    if (character.getY() != tunnelRow) {
+        return; 
+    }
+
+    if (character.getX() < leftTunnelX) {
+        character.setX(rightTunnelX);
+    } 
+    else if (character.getX() > rightTunnelX) {
+        character.setX(leftTunnelX);
+    
+    }
+}
+//resets the game when Pacman loses all his lives or when he eats all pellets
+ public void resetGame() {
+    this.maze = new Maze(); // resets all pellets
+
+    lives = 2;
+    score = 0;
+    PacmanEatsGhostsScore = 200;
+    currentState = new NormalState(this);
+
+    if (ghostModePause != null) {
+        ghostModePause.stop();
+    }
+
+    if (powerModePause != null) {
+        powerModePause.stop();
+    }
+
+    pacman.setX(9);
+    pacman.setY(15);
+    pacman.setOrientation(Character.Orientation.UP);
+    pacman.setNextOrientation(Character.Orientation.UP);
+
+    spawnGhosts();
+    startGhostModeCycle();
+}
+
+public boolean allPelletsEaten() {
+    for (int row = 0; row < maze.getRows(); row++) {
+        for (int col = 0; col < maze.getCols(); col++) {
+            Tile tile = maze.getTile(row, col);
+
+            if (tile.getTileType() == Tile.TileType.SMALL_PELLET
+                    || tile.getTileType() == Tile.TileType.POWER_PELLET) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
 }

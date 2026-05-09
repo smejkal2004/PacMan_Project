@@ -141,23 +141,9 @@ To do:
  + Points for eating multiple ghosts (200,400,800,1600)
    - Note: has to be from one power pellet immune state
  + Ghosts return "home" and return as normal ghosts, respawn timer?
-
-- Fix map: 
- + Wall images?
- + tunnel in the map
- + tunnel makes ghosts and pacman appear on the other side of the tunnel
-
-- Fix top: 
- + (Highscore middle), no need to mention Normal state, powerstate etc.
- + Show lifes as number of Pacmans 
- + If Pacman is killed then the map does not completely reset (The uneated pellets are still there)
+ 
 
 - Add Cherry?
  + Cherry is 100 points (location: center of the maze)
 
 - Add extra lifes to Pacman if you succeed to eat all the pellets
-
-
-
-Additional if time and will: 
-- Add levels that are not always the same 

@@ -16,7 +16,7 @@ public class Main extends Application {
     public void start(Stage stage) {
         Game game = new Game();
         GameView view = new GameView(game);
-        Scene scene = new Scene(view.render(), 400, 520); // changed 620 to 660 for lives and score display
+        Scene scene = new Scene(view.render(), 400, 520); 
     
         GameController controller = new GameController(game, view, scene);
         controller.start();

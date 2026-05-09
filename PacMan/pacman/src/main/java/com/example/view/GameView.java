@@ -30,7 +30,7 @@ public class GameView {
         private Image orangeGhostImage;
         private Image redGhostImage;
         private Image pinkGhostImage;
-        //private Image scaredGhostImage;
+        private Image scaredGhostImage;
 
         // Maze Image
         private Image WallImage;
@@ -49,7 +49,7 @@ public class GameView {
             orangeGhostImage = new Image(getClass().getResourceAsStream("/images/orangeGhost.png"));
             redGhostImage = new Image(getClass().getResourceAsStream("/images/redGhost.png"));
             pinkGhostImage = new Image(getClass().getResourceAsStream("/images/pinkGhost.png"));
-            //scaredGhostImage = new Image(getClass().getResourceAsStream("/images/scaredGhost.png"));
+            scaredGhostImage = new Image(getClass().getResourceAsStream("/images/scaredGhost.png"));
             WallImage = new Image(getClass().getResourceAsStream("/images/wall.png"));
             //CherryImage = new Image(getClass().getResourceAsStream("/images/cherry.png"));
     }
@@ -164,29 +164,48 @@ public class GameView {
 
 
         for (Ghost ghost : game.getGhosts()){  // change with DRY principle (for -> switch -> case)
+            
+            if (!ghost.isActive()) {
+                continue;
+            }
             Image ghostImage = null;
+
+            if (ghost.IsScared()) {
+                ghostImage = scaredGhostImage;
+            } else {
+            
             if (ghost.getColor().equals("red")){
                 ghostImage = redGhostImage;
+
                 } else if (ghost.getColor().equals("orange")){
                    ghostImage = orangeGhostImage; 
+
                 } else if (ghost.getColor().equals("blue")){
                    ghostImage = blueGhostImage;
+
                 } else if (ghost.getColor().equals("pink")){
                     ghostImage = pinkGhostImage;
+
                 }
+            }
             if (ghostImage != null){
                 ImageView ghostView = new ImageView(ghostImage);
+
                 ghostView.setX(ghost.getX() * 20);
                 ghostView.setY(ghost.getY() * 20 + topOffset);
+
                 ghostView.setFitWidth(20);
                 ghostView.setFitHeight(20);
+
                 root.getChildren().add(ghostView);
             }
         }
-                // Needs scared ghost also
          return root;
     }        
 }
+
+
+
  
 
 

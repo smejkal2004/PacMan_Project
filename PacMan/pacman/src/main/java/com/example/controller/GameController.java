@@ -28,14 +28,10 @@ public class GameController {
         scene.setOnKeyPressed(event -> {
             if (game.getCurrentState() instanceof FinishedState) return; // doesn't take input once game is finished
             switch (event.getCode()) {
-                case UP -> game.getPacman().setNextOrientation(Character.Orientation.UP);
-                case DOWN -> game.getPacman().setNextOrientation(Character.Orientation.DOWN);
-                case LEFT -> game.getPacman().setNextOrientation(Character.Orientation.LEFT);
-                case RIGHT -> game.getPacman().setNextOrientation(Character.Orientation.RIGHT);
-                case W -> game.getPacman().setNextOrientation(Character.Orientation.UP);
-                case S -> game.getPacman().setNextOrientation(Character.Orientation.DOWN);
-                case A -> game.getPacman().setNextOrientation(Character.Orientation.LEFT);
-                case D -> game.getPacman().setNextOrientation(Character.Orientation.RIGHT);
+                case UP, W -> game.getPacman().setNextOrientation(Character.Orientation.UP);
+                case DOWN, S -> game.getPacman().setNextOrientation(Character.Orientation.DOWN);
+                case LEFT, A -> game.getPacman().setNextOrientation(Character.Orientation.LEFT);
+                case RIGHT, D -> game.getPacman().setNextOrientation(Character.Orientation.RIGHT);
                 case TAB -> {
                     game.setIsPaused(!game.getIsPaused());
                     if (game.getIsPaused() == true){

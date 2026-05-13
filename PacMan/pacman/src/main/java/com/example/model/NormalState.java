@@ -12,9 +12,8 @@ public class NormalState implements GameState {
     public void handleGhostCollision(){
         game.setLives(game.getLives() - 1);
         if (game.getLives() <= 0) {
-            game.resetGame();
-            
-        }
+            game.setCurrentState(new FinishedState(game));
+        } 
         else {
             game.resetCharactersAfterDeath();
             game.setCurrentState(new ImmuneState(game));

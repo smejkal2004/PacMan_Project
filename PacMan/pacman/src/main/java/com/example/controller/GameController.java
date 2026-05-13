@@ -26,28 +26,41 @@ public class GameController {
 
     public void start() {
         scene.setOnKeyPressed(event -> {
-            if (game.getCurrentState() instanceof FinishedState) return; // doesn't take input once game is finished
+            if (game.getCurrentState() instanceof FinishedState) {
             switch (event.getCode()) {
+                // Pressing R restarts thhe game and pressing ESC will exit the game
+                case R -> game.resetGame();
+                case ESCAPE -> Platform.exit();
+                default -> {}
+            }
+            return;
+        }
+            switch(event.getCode()) {
+                // Arrows keys and WASD keys for Pacman movement
                 case UP -> game.getPacman().setNextOrientation(Character.Orientation.UP);
                 case DOWN -> game.getPacman().setNextOrientation(Character.Orientation.DOWN);
                 case LEFT -> game.getPacman().setNextOrientation(Character.Orientation.LEFT);
                 case RIGHT -> game.getPacman().setNextOrientation(Character.Orientation.RIGHT);
+               
                 case W -> game.getPacman().setNextOrientation(Character.Orientation.UP);
                 case S -> game.getPacman().setNextOrientation(Character.Orientation.DOWN);
                 case A -> game.getPacman().setNextOrientation(Character.Orientation.LEFT);
                 case D -> game.getPacman().setNextOrientation(Character.Orientation.RIGHT);
+                // Pressing Tab pauses the game
                 case TAB -> {
                     game.setIsPaused(!game.getIsPaused());
+                    
                     if (game.getIsPaused() == true){
                         timeline.pause();
-                    }
+                                    }
                     else{
                         timeline.play();
-                    }
+                    }                                                          
                 }
-                case ESCAPE -> Platform.exit(); // does not work in finishedState
+                case ESCAPE -> Platform.exit();
+
                 default -> {}
-            }
+        }
         });
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), e -> {

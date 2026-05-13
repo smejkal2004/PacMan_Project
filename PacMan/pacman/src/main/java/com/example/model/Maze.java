@@ -120,11 +120,11 @@ public class Maze {
     "XXXXXXXXXXXXXXXXXXX" 
 
     Legend:
-    X  = wall
-    0  = empty space (no pellet)
-    .  = small pellet
+    X = wall
+    0 = empty space (no pellet)
+    . = small pellet
     B = big/power pellet
-    P  = Pac-Man starting position
+    P = Pac-Man starting position
     r = Red ghost starting position
     p = Pink ghost starting position
     b = Blue ghost starting position

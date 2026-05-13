@@ -155,7 +155,7 @@ public class Game {
             activatePowerState();
         }
         if (allPelletsEaten()){
-            resetGame();
+            resetLevel();
         }
     }
 
@@ -288,7 +288,7 @@ public class Game {
         };
     }
 
-    public void checkGhostCollision(){ // will eventually get changed to know which ghost needs to be removed (if in PowerState)
+    public void checkGhostCollision(){ // Makes it so that collision is checked after every move of Pacman and trhe ghosts 
         for (Ghost ghost : ghosts){
 
             if (!ghost.isActive()) {
@@ -296,13 +296,13 @@ public class Game {
             }
             if (ghost.getX() == pacman.getX() && ghost.getY() == pacman.getY()){
                 
-                if (ghost.getMode() == GhostMode.FRIGHTENED) {
-                    score += PacmanEatsGhostsScore;
-                    PacmanEatsGhostsScore *= 2;
-                }
+                if (ghost.getMode() == GhostMode.FRIGHTENED && (currentState instanceof PowerState)) {
+                     
+                        
+                        score += PacmanEatsGhostsScore;
+                        PacmanEatsGhostsScore *= 2;
 
-                if (ghost.getMode() == GhostMode.FRIGHTENED){
-                    ghost.setActive(false); // This makes the ghost disappear instead of resetting its position when eaten by Pacman
+                        ghost.setActive(false);
 
                     PauseTransition respawnPause = new PauseTransition(Duration.seconds(5));
                     respawnPause.setOnFinished(e -> {
@@ -322,6 +322,7 @@ public class Game {
                 return;
             }
         }
+    
     }
 
     public void startGhostModeCycle() {
@@ -343,7 +344,7 @@ public class Game {
         ghostModePause.play();
     }
 
-
+    // Makes it so Pacman can eat ghosts for a certain amount of time and that time can be reset if Pacman eats another PowerPellet
     public void activatePowerState() {
         PacmanEatsGhostsScore = 200; // Resets score for eating ghosts when Pacman enter powerstate
 
@@ -351,17 +352,30 @@ public class Game {
             ghostModePause.stop();
         }
 
+        if (powerModePause != null) {
+            powerModePause.stop();
+        }
+
+        currentState = new PowerState(this);
+
         for (Ghost ghost : ghosts) {
             ghost.setMode(GhostMode.FRIGHTENED);
         }
         powerModePause = new PauseTransition(Duration.seconds(15)); // PowerState lasts for 15 sec
 
+        // Makes the Ghosts go back to chase mode when PowerState ends and resets ghostcycle
         powerModePause.setOnFinished(e -> {
+            currentState = new NormalState(this);
+
             for (Ghost ghost : ghosts) {
                 ghost.setMode(GhostMode.CHASE);
             }
+
+        startGhostModeCycle();
         });
+
         powerModePause.play();
+    
     }
 
     public void resetCharactersAfterDeath() {
@@ -447,5 +461,26 @@ public boolean allPelletsEaten() {
     }
 
     return true;
+}
+
+public void resetLevel() {
+    this.maze = new Maze(); // resets pellets only
+
+    if (ghostModePause != null) {
+        ghostModePause.stop();
+    }
+
+    if (powerModePause != null) {
+        powerModePause.stop();
+    }
+    currentState = new NormalState(this);
+
+    pacman.setX(9);
+    pacman.setY(15);
+    pacman.setOrientation(Character.Orientation.UP);
+    pacman.setNextOrientation(Character.Orientation.UP);
+
+    spawnGhosts();
+    startGhostModeCycle();
 }
 }

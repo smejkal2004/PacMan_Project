@@ -21,7 +21,7 @@ public class Main extends Application {
         GameController controller = new GameController(game, view, scene);
         controller.start();
 
-        stage.setTitle("Pac-Man (so far)");
+        stage.setTitle("Pac-Man");
         stage.setScene(scene);
         stage.show();
     }
@@ -33,4 +33,3 @@ public class Main extends Application {
 
 // mvn javafx:run
 // mvn clean javafx:run 
-

@@ -56,21 +56,7 @@ public class Game {
     public GameState getCurrentState(){
         return this.currentState;
     }
-    public String getCurrentStateString(){   // change with DRY principle (for -> switch -> case)
-        if(currentState instanceof NormalState){
-            return "Normal";
-        }
-        else if(currentState instanceof ImmuneState){
-            return "Immune";
-        }
-        else if(currentState instanceof PowerState){
-            return "Power";
-        }
-        else if(currentState instanceof FinishedState){
-            return "Finished";
-        }
-        return "unknown";
-    }
+  
     public void setCurrentState(GameState currentState){
         this.currentState = currentState;
     }
@@ -89,6 +75,13 @@ public class Game {
 
     public void setIsPaused(Boolean isPaused){
         this.isPaused = isPaused;
+    }
+
+    public int getPacmanEatsGhostScore() {
+        return this.PacmanEatsGhostsScore;
+    }
+    public void setPacmanEatsGhostScore(int score) {
+        this.PacmanEatsGhostsScore = score;
     }
 
     // Pacman movement orientation request = Where the player wants Pacman to go
@@ -267,10 +260,10 @@ public class Game {
         }
         if (bestDirection == null) {
 
-            for (Character.Orientation ScaredDirection : directions) {
+            for (Character.Orientation FrightenedDirection : directions) {
                 
-                if (canMove(ghost, ScaredDirection)) {
-                    return ScaredDirection;
+                if (canMove(ghost, FrightenedDirection)) {
+                    return FrightenedDirection;
                 }
             }
         }
@@ -295,30 +288,8 @@ public class Game {
                 continue;
             }
             if (ghost.getX() == pacman.getX() && ghost.getY() == pacman.getY()){
-                
-                if (ghost.getMode() == GhostMode.FRIGHTENED && (currentState instanceof PowerState)) {
-                     
-                        
-                        score += PacmanEatsGhostsScore;
-                        PacmanEatsGhostsScore *= 2;
 
-                        ghost.setActive(false);
-
-                    PauseTransition respawnPause = new PauseTransition(Duration.seconds(5));
-                    respawnPause.setOnFinished(e -> {
-                        ghost.setX(9);
-                        ghost.setY(9);
-
-                        ghost.setMode(GhostMode.CHASE);
-                        ghost.setActive(true);
-                    });
-
-                    respawnPause.play();
-
-                    return;
-                }
-
-                currentState.handleGhostCollision();
+                currentState.handleGhostCollision(ghost);
                 return;
             }
         }

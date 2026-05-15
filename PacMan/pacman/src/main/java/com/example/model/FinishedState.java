@@ -2,14 +2,12 @@ package com.example.model;
 
 public class FinishedState implements GameState {
 
-    private Game game;
 
     public FinishedState(Game game){
-        this.game = game;
     }
     
     @Override
-    public void handleGhostCollision(){}
+    public void handleGhostCollision(Ghost ghost){}
 
     @Override
     public void handlePowerPelletCollision(){}

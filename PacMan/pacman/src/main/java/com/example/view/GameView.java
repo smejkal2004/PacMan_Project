@@ -4,6 +4,8 @@ import com.example.model.Game;
 import com.example.model.Ghost;
 import com.example.model.Tile;
 
+import com.example.model.FinishedState;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -49,7 +51,7 @@ public class GameView {
             redGhostImage = new Image(getClass().getResourceAsStream("/images/redGhost.png"));
             pinkGhostImage = new Image(getClass().getResourceAsStream("/images/pinkGhost.png"));
             scaredGhostImage = new Image(getClass().getResourceAsStream("/images/scaredGhost.png"));
-            WallImage = new Image(getClass().getResourceAsStream("/images/wall.png"));
+            WallImage = new Image(getClass().getResourceAsStream("/images/Wall.png"));
             
     }
 
@@ -116,7 +118,7 @@ public class GameView {
                     root.getChildren().addAll(pausedRectangle, pausedText);
                 }
 
-                if (game.getCurrentStateString().equals("Finished")){   
+                if (game.getCurrentState() instanceof FinishedState){   
                     // Displays "GAME OVER" text in the middle of the screen when game is finished
                     double gameOverWidth = 260;
                     double gameOverHeight = 80;
@@ -214,7 +216,7 @@ public class GameView {
             }
             Image ghostImage = null;
 
-            if (ghost.IsScared()) {
+            if (ghost.IsFrightened()) {
                 ghostImage = scaredGhostImage;
             } else {
             
@@ -247,11 +249,3 @@ public class GameView {
          return root;
     }        
 }
-
-
-
- 
-
-
-
-

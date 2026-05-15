@@ -35,7 +35,7 @@ public class Ghost extends Character {
         return this.scatterTargetY;
     }
 
-    public boolean IsScared() {
+    public boolean IsFrightened() {
         return mode == GhostMode.FRIGHTENED;
     }
     

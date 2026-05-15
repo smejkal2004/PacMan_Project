@@ -13,7 +13,7 @@ public class ImmuneState implements GameState {
     }
     
     @Override
-    public void handleGhostCollision(){}
+    public void handleGhostCollision(Ghost ghost){}
 
     @Override
     public void handlePowerPelletCollision(){

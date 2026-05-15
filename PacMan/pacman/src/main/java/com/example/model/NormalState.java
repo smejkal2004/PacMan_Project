@@ -9,7 +9,7 @@ public class NormalState implements GameState {
     }
     
     @Override
-    public void handleGhostCollision(){
+    public void handleGhostCollision(Ghost ghost){
         game.setLives(game.getLives() - 1);
         if (game.getLives() <= 0) {
             game.setCurrentState(new FinishedState(game));

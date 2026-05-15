@@ -77,22 +77,7 @@ public class Maze {
     public Tile getTile(int row, int col) {
         return grid[row][col];
     }
-    public void setTile(int row, int col, Tile tile) {
-        grid[row][col] = tile;
-    }
-    // Tunnel check method 
-    public boolean isTunnelTile(int row, int col) {
-        return (row == 9 && (col == 0 || col == getCols() - 1));
-    }
-    // Determines the other side of the tunnel given the current column
-    public int getToOtherTunnelSide(int col) {
-        if (col == 0) {
-            return getCols() - 1;
-        } else {
-            return 0;
-        }
-        }
-    }
+}
 
 
 
@@ -130,49 +115,3 @@ public class Maze {
     b = Blue ghost starting position
     o = Orange ghost starting position
     */
-
-
-
-// Old map below:
-/* 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
-1  s  s  s  s  s  s  s  s  s  s  s  s  1  1  s  s  s  s  s  s  s  s  s  s  s  s  1
-1  s  1  1  1  1  s  1  1  1  1  1  s  1  1  s  1  1  1  1  1  s  1  1  1  1  s  1
-1  b  1  1  1  1  s  1  1  1  1  1  s  1  1  s  1  1  1  1  1  s  1  1  1  1  b  1
-1  s  1  1  1  1  s  1  1  1  1  1  s  1  1  s  1  1  1  1  1  s  1  1  1  1  s  1
-1  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  1
-1  s  1  1  1  1  s  1  1  s  1  1  1  1  1  1  1  1  s  1  1  s  1  1  1  1  s  1
-1  s  1  1  1  1  s  1  1  s  1  1  1  1  1  1  1  1  s  1  1  s  1  1  1  1  s  1
-1  s  s  s  s  s  s  1  1  s  s  s  s  1  1  s  s  s  s  1  1  s  s  s  s  s  s  1
-1  1  1  1  1  1  s  1  1  1  1  1  0  1  1  0  1  1  1  1  1  s  1  1  1  1  1  1
-1  1  1  1  1  1  s  1  1  1  1  1  0  1  1  0  1  1  1  1  1  s  1  1  1  1  1  1
-1  1  1  1  1  1  s  1  1  0  0  0  0  0  0  0  0  0  0  1  1  s  1  1  1  1  1  1
-1  1  1  1  1  1  s  1  1  0  1  1  1  Gr Gp 1  1  1  0  1  1  s  1  1  1  1  1  1
-0  0  0  0  0  0  s  0  0  0  1  Gb Gy 0  0  Go 1  0  0  0  0  s  0  0  0  0  0  0
-1  1  1  1  1  1  s  1  1  0  1  1  1  1  1  1  1  1  0  1  1  s  1  1  1  1  1  1
-1  1  1  1  1  1  s  1  1  0  0  0  0  0  0  0  0  0  0  1  1  s  1  1  1  1  1  1
-1  1  1  1  1  1  s  1  1  0  1  1  1  1  1  1  1  1  0  1  1  s  1  1  1  1  1  1
-1  1  1  1  1  1  s  1  1  0  1  1  1  1  1  1  1  1  0  1  1  s  1  1  1  1  1  1
-1  s  s  s  s  s  s  s  s  s  s  s  s  1  1  s  s  s  s  s  s  s  s  s  s  s  s  1
-1  s  1  1  1  1  s  1  1  1  1  1  s  1  1  s  1  1  1  1  1  s  1  1  1  1  s  1
-1  s  1  1  1  1  s  1  1  1  1  1  s  1  1  s  1  1  1  1  1  s  1  1  1  1  s  1
-1  b  s  s  1  1  s  s  s  s  s  s  s  0  P  s  s  s  s  s  s  s  1  1  s  s  b  1
-1  1  1  s  1  1  s  1  1  s  1  1  1  1  1  1  1  1  s  1  1  s  1  1  s  1  1  1
-1  1  1  s  1  1  s  1  1  s  1  1  1  1  1  1  1  1  s  1  1  s  1  1  s  1  1  1
-1  s  s  s  s  s  s  1  1  s  s  s  s  1  1  s  s  s  s  1  1  s  s  s  s  s  s  1
-1  s  1  1  1  1  1  1  1  1  1  1  s  1  1  s  1  1  1  1  1  1  1  1  1  1  s  1
-1  s  1  1  1  1  1  1  1  1  1  1  s  1  1  s  1  1  1  1  1  1  1  1  1  1  s  1
-1  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  s  1
-1  s  1  1  1  1  s  1  1  1  1  1  1  1  1  1  1  1  1  s  1  1  1  1  1  1  s  1
-1  s  s  s  s  s  s  s  s  s  s  s  s  1  1  s  s  s  s  s  s  s  s  s  s  s  s  1
-1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
-
-Legend:
-1  = wall
-0  = empty space (no pellet)
-s  = small pellet
-b  = big/power pellet
-P  = Pac-Man starting position
-Gr = Red ghost starting position
-Gp = Pink ghost starting position
-Gb = Blue ghost starting position
-Go = Orange ghost starting position */

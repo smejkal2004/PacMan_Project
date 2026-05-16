@@ -97,72 +97,6 @@ public class GameView {
                     root.getChildren().add(powerPellet);
                 }
 
-                if (game.getIsPaused() == true){
-                    Text pausedText = new Text("GAME PAUSED");
-                    pausedText.setFill(Color.BLACK);
-                    pausedText.setFont(Font.font("Arial", 28));
-                    Rectangle pausedRectangle = new Rectangle(90, 220, 220, 60);
-                    pausedRectangle.setFill(Color.WHITE);
-                    pausedText.setX(
-                        pausedRectangle.getX() 
-                        + (pausedRectangle.getWidth() / 2)
-                        - pausedText.getLayoutBounds().getWidth() / 2
-                    );
-
-                    pausedText.setY(
-                        pausedRectangle.getY() 
-                        + (pausedRectangle.getHeight() / 2)
-                        + pausedText.getLayoutBounds().getHeight() / 4
-                    );
-
-                    root.getChildren().addAll(pausedRectangle, pausedText);
-                }
-
-                if (game.getCurrentState() instanceof FinishedState){   
-                    // Displays "GAME OVER" text in the middle of the screen when game is finished
-                    double gameOverWidth = 260;
-                    double gameOverHeight = 80;
-
-                    double gameOverX = (400 - gameOverWidth) / 2;
-                    double gameOverY = (500 - gameOverHeight) / 2;
-
-                    Rectangle gameOverRectangle = new Rectangle(
-                        gameOverX,
-                        gameOverY,
-                        gameOverWidth,
-                        gameOverHeight
-                    );
-
-                    gameOverRectangle.setFill(Color.WHITE);
-
-                    Text gameOverText = new Text("GAME OVER");
-                    gameOverText.setFill(Color.RED);
-                    gameOverText.setFont(Font.font("Arial", 36));
-
-                    gameOverText.setX(
-                        gameOverX + gameOverWidth / 2 - gameOverText.getLayoutBounds().getWidth() / 2
-                    );
-
-                    gameOverText.setY(
-                        gameOverY + gameOverHeight / 2 + gameOverText.getLayoutBounds().getHeight() / 4
-
-                    );
-
-                    Text restartText = new Text("Press R to Restart");
-                        restartText.setFill(Color.BLACK);
-                        restartText.setFont(Font.font("Arial", 18));
-
-                        restartText.setX(
-                            gameOverX + gameOverWidth / 2 - restartText.getLayoutBounds().getWidth() / 2
-                        );
-
-                        restartText.setY(gameOverY + 65); 
-
-                        root.getChildren().addAll(gameOverRectangle, gameOverText, restartText);
-                    
-
-                
-                }
 
                 }
             }
@@ -246,6 +180,69 @@ public class GameView {
                 root.getChildren().add(ghostView);
             }
         }
+
+        if (game.getIsPaused()) {
+            Text pausedText = new Text("GAME PAUSED");
+            pausedText.setFill(Color.BLACK);
+            pausedText.setFont(Font.font("Arial", 28));
+            Rectangle pausedRectangle = new Rectangle(90, 220, 220, 60);
+            pausedRectangle.setFill(Color.WHITE);
+            pausedText.setX(
+                pausedRectangle.getX() 
+                + (pausedRectangle.getWidth() / 2)
+                - pausedText.getLayoutBounds().getWidth() / 2
+            );
+
+            pausedText.setY(
+                pausedRectangle.getY() 
+                + (pausedRectangle.getHeight() / 2)
+                + pausedText.getLayoutBounds().getHeight() / 4
+            );
+
+            root.getChildren().addAll(pausedRectangle, pausedText);
+        }
+
+        if (game.getCurrentState() instanceof FinishedState) {
+            double gameOverWidth = 260;
+            double gameOverHeight = 80;
+
+            double gameOverX = (400 - gameOverWidth) / 2;
+            double gameOverY = (500 - gameOverHeight) / 2;
+
+            Rectangle gameOverRectangle = new Rectangle(
+                gameOverX,
+                gameOverY,
+                gameOverWidth,
+                gameOverHeight
+            );
+
+            gameOverRectangle.setFill(Color.WHITE);
+
+            Text gameOverText = new Text("GAME OVER");
+            gameOverText.setFill(Color.RED);
+            gameOverText.setFont(Font.font("Arial", 36));
+
+            gameOverText.setX(
+                gameOverX + gameOverWidth / 2 - gameOverText.getLayoutBounds().getWidth() / 2
+            );
+
+            gameOverText.setY(
+                gameOverY + gameOverHeight / 2 + gameOverText.getLayoutBounds().getHeight() / 4
+            );
+
+            Text restartText = new Text("Press R to Restart");
+            restartText.setFill(Color.BLACK);
+            restartText.setFont(Font.font("Arial", 18));
+
+            restartText.setX(
+                gameOverX + gameOverWidth / 2 - restartText.getLayoutBounds().getWidth() / 2
+            );
+
+            restartText.setY(gameOverY + 65);
+
+            root.getChildren().addAll(gameOverRectangle, gameOverText, restartText);
+        }
+
          return root;
     }        
 }

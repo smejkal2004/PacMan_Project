@@ -48,14 +48,7 @@ public class GameController {
                 case D -> game.getPacman().setNextOrientation(Character.Orientation.RIGHT);
                 // Pressing Tab pauses the game
                 case TAB -> {
-                    game.setIsPaused(!game.getIsPaused());
-                    
-                    if (game.getIsPaused() == true){
-                        timeline.pause();
-                                    }
-                    else{
-                        timeline.play();
-                    }                                                          
+                    game.setIsPaused(!game.getIsPaused());                                                         
                 }
                 case ESCAPE -> Platform.exit();
 
@@ -63,7 +56,7 @@ public class GameController {
         }
         });
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), e -> {
+        timeline = new Timeline(new KeyFrame(Duration.millis(200), e -> {
             if (!game.getIsPaused() && !(game.getCurrentState() instanceof FinishedState)){ // stops pacman from moving but still renders game scene if game finished or paused
             game.movePacman();
             game.moveGhosts();
